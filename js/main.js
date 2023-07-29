@@ -7,10 +7,8 @@ form.addEventListener("submit", (e) => {
     const nome = e.target.elements['nome']
     const quantidade = e.target.elements['quantidade']
 
-    //passando para function o nome e a quantidade
     criaElemento(nome.value, quantidade.value)
 
-    //limpando o form depois do envio dos dados
     nome.value = ""
     quantidade.value = ""
 })
@@ -26,12 +24,14 @@ function criaElemento(nome, quantidade) {
     const numeroItem = document.createElement('strong')
     numeroItem.innerHTML = quantidade
 
-    //1º add o segundo elemento dentro desse, basicamente vai ficar assim: <li class="item"><strong>7</strong></li>
-    //appendChild eu adiciono um obj dentro do outro
     novoItem.appendChild(numeroItem)
 
-    //2º reafirmo a construção do elemento e adiciono o conteúdo.
     novoItem.innerHTML += nome
 
     lista.appendChild(novoItem)
+
+    /*ARMAZENANDO DADOS NO LOCALSTORE*/
+    //porém eles se sobrescrevem
+    localStorage.setItem('nome', nome)
+    localStorage.setItem('quantidade', quantidade)
 }
