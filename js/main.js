@@ -1,10 +1,18 @@
 const form = document.getElementById('novoItem')
+const lista = document.getElementById('lista')
 
 form.addEventListener("submit", (e) => {
     e.preventDefault()
 
+    const nome = e.target.elements['nome']
+    const quantidade = e.target.elements['quantidade']
+
     //passando para function o nome e a quantidade
-    criaElemento(e.target.elements['nome'].value, e.target.elements['quantidade'].value)
+    criaElemento(nome.value, quantidade.value)
+
+    //limpando o form depois do envio dos dados
+    nome.value = ""
+    quantidade.value = ""
 })
 
 function criaElemento(nome, quantidade) {
@@ -12,12 +20,10 @@ function criaElemento(nome, quantidade) {
     console.log(quantidade)
 
     /*CRIANDO ELEMENTOS VIA JS*/
-    //elementos criados pelo js são obj
-    //<li class="item"><strong>7</strong>Camisas</li>
-    const novoItem = document.createElement('li') //criei um novo item
-    novoItem.classList.add("item") //adicionei a classe "item" a esse novo item
+    const novoItem = document.createElement('li')
+    novoItem.classList.add("item")
 
-    const numeroItem = document.createElement('strong') //a tag strong recebe a quantidade
+    const numeroItem = document.createElement('strong')
     numeroItem.innerHTML = quantidade
 
     //1º add o segundo elemento dentro desse, basicamente vai ficar assim: <li class="item"><strong>7</strong></li>
@@ -27,8 +33,5 @@ function criaElemento(nome, quantidade) {
     //2º reafirmo a construção do elemento e adiciono o conteúdo.
     novoItem.innerHTML += nome
 
-    //pego a ul
-    const lista = document.getElementById('lista')
-    //adiciono o novo li
     lista.appendChild(novoItem)
 }
