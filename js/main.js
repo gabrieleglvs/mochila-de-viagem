@@ -1,7 +1,16 @@
 const form = document.getElementById('novoItem')
 const lista = document.getElementById('lista')
-const itens = []
 
+/*CONFERINDO SE JÁ HÁ ITENS NO LOCALSTORAGE*/
+const itens = JSON.parse(localStorage.getItem('itens')) || []
+//devo usar o JSON.parse para transformar de volta a string em obj
+
+/*PEGANDO CADA ELEMENTO ARMAZENADO NO LOCALSTORAGE PARA RECARREGÁ-LOS NA PAG*/
+itens.forEach((elemento) => {
+    console.log(elemento.nome, elemento.quantidade)
+})
+
+/*PASSANDO OS DADOS PARA A FUNÇÃO criaElemento*/
 form.addEventListener("submit", (e) => {
     e.preventDefault()
 
@@ -32,16 +41,13 @@ function criaElemento(nome, quantidade) {
     lista.appendChild(novoItem)
 
     /*ARMAZENANDO DADOS NO LOCALSTORAGE*/
-
-    //transformamos em um objeto para montar um grupo de infos
+    
     const itemAtual = {
         'nome': nome,
         'quantidade': quantidade
     }
 
-    //criamos um array e inserimos cada novo obj lá dentro
     itens.push(itemAtual)
 
-    //depois passamos esse obj para string com json, para que o lS consiga ler.
-    localStorage.setItem('item', JSON.stringify(itens))
+    localStorage.setItem('itens', JSON.stringify(itens))
 }
