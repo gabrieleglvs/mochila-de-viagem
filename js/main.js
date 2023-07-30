@@ -34,9 +34,9 @@ form.addEventListener("submit", (e) => {
         atualizaElemento(itemAtual)
 
         /*Atualizando um item do LocalStorage*/
-        itens[existe.id] = itemAtual
+        itens[itens.findIndex(elemento => elemento.id === existe.id)] = itemAtual
     } else {
-        itemAtual.id = itens.length
+        itemAtual.id = itens[itens.length -1] ? (itens[itens.length-1]).id + 1 : 0
         //se nao, cria um novo a partir do tamanho no array
 
         /*CHAMANDO A FUNÇÃO*/
@@ -68,7 +68,7 @@ function criaElemento(itemAtual) {
     novoItem.innerHTML += itemAtual.nome
 
     /*ADICIONANDO O BOTAO DE DELETAR*/
-    novoItem.appendChild(botaoDeleta())
+    novoItem.appendChild(botaoDeleta(itemAtual.id))
 
     lista.appendChild(novoItem)
 }
@@ -78,17 +78,25 @@ function atualizaElemento(itemAtual) {
     document.querySelector("[data-id='"+itemAtual.id+"']").innerHTML = itemAtual.quantidade
 }
 
-function botaoDeleta() {
+function botaoDeleta(id) {
     const elementoBotao = document.createElement("button")
     elementoBotao.innerText = "X"
 
     elementoBotao.addEventListener("click", function () {
-        deletaElemento(this.parentNode)
+        deletaElemento(this.parentNode, id)
     })
 
     return elementoBotao
 }
 
-function deletaElemento(tag) {
+function deletaElemento(tag, id) {
     tag.remove()
+
+    /*REMOVER NO LocalStorage*/
+    //1º remover o item do array
+    itens.splice(itens.findIndex(elemento => elemento.id === id), 1)
+
+    //2º sobrescrevendo o localStorage
+    localStorage.setItem('itens', JSON.stringify(itens))
+    
 }
