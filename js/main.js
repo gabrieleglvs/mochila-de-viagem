@@ -32,6 +32,9 @@ form.addEventListener("submit", (e) => {
         //se o id existe continua o mesmo
         
         atualizaElemento(itemAtual)
+
+        /*Atualizando um item do LocalStorage*/
+        itens[existe.id] = itemAtual
     } else {
         itemAtual.id = itens.length
         //se nao, cria um novo a partir do tamanho no array
