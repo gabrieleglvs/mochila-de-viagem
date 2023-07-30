@@ -67,10 +67,28 @@ function criaElemento(itemAtual) {
 
     novoItem.innerHTML += itemAtual.nome
 
+    /*ADICIONANDO O BOTAO DE DELETAR*/
+    novoItem.appendChild(botaoDeleta())
+
     lista.appendChild(novoItem)
 }
 
 function atualizaElemento(itemAtual) {
     //Busco o strong pelo ID e atualizo a quantidade apenas no HTML (falta atualizar no lS)
     document.querySelector("[data-id='"+itemAtual.id+"']").innerHTML = itemAtual.quantidade
+}
+
+function botaoDeleta() {
+    const elementoBotao = document.createElement("button")
+    elementoBotao.innerText = "X"
+
+    elementoBotao.addEventListener("click", function () {
+        deletaElemento(this.parentNode)
+    })
+
+    return elementoBotao
+}
+
+function deletaElemento(tag) {
+    tag.remove()
 }
